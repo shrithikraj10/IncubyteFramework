@@ -8,28 +8,29 @@ A Python-based automation framework using **Playwright**, **Pytest**, and **Pyte
 
 IncubyteFramework/
 ├── core/
-│ ├── base/
-│ │ ├── base_ui.py # Base UI interactions (click, fill, get_text, etc.)
-│ │ └── browser_manager.py # Browser and context management
-│ └── utils/
-│ ├── config.py # Environment configuration
-│ └── data_handler.py # CSV read/write and test data helpers
+│   ├── base/
+│   │   ├── base_ui.py           # Base UI interactions (click, fill, get_text, etc.)
+│   │   └── browser_manager.py   # Browser and context management
+│   └── utils/
+│       ├── config.py            # Environment configuration
+│       └── data_handler.py      # CSV read/write and test data helpers
 ├── pages/
-│ ├── login.py
-│ ├── signup.py
-│ └── account.py
+│   ├── login.py
+│   ├── signup.py
+│   └── account.py
 ├── tests/
-│ ├── features/
-│ │ └── test_tc01_user_onboarding.feature
-│ │ └── test_tc02_user_account_details.feature
-│ └── step_definitions/
-│ ├── test_tc01_user_onboarding.py
-│ └── test_tc02_user_account_details.py
-├── .env  # Template environment variables example
+│   ├── features/
+│   │   ├── test_tc01_user_onboarding.feature
+│   │   └── test_tc02_user_account_details.feature
+│   └── step_definitions/
+│       ├── test_tc01_user_onboarding.py
+│       └── test_tc02_user_account_details.py
+├── .env                        # Template environment variables example
 ├── requirements.txt
 ├── setup.py
 ├── pytest.ini
 └── README.md
+
 
 
 ---
