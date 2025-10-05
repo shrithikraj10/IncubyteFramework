@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, TimeoutError
+from playwright.sync_api import Page, TimeoutError, expect
 
 class UIBase:
     def __init__(self, page: Page):
@@ -33,5 +33,19 @@ class UIBase:
             raise Exception(f"Element not found: {locator}")
 
     def navigate_to(self, url: str):
-        self.page.goto(url)
-        print(f"Navigated to: {url}")
+        try:
+            self.page.goto(url)
+            print(f"Navigated to: {url}")
+        except Exception as e:
+            raise Exception(f"Failed to navigate to page: {url} with Error: {e}")
+    
+    def expect_text(self, locator: str, expected_text: str):
+        """
+        Assert that an element contains the expected text.
+        """
+        try:
+            element = self.page.locator(locator)
+            expect(element).to_contain_text(expected_text)
+            print(f"[Assertion Passed] '{locator}' contains text: '{expected_text}'")
+        except Exception as e:
+            raise Exception(f"[Assertion Failed] '{locator}' does not contain text '{expected_text}'. Error: {e}")

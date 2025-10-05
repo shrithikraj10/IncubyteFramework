@@ -1,6 +1,7 @@
 import csv
 import os
 from typing import List, Dict
+import random
 
 
 class DataHandler:
@@ -62,3 +63,19 @@ class DataHandler:
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerow(row)
+    
+    @staticmethod
+    def randomize_test_string(max_digits: int = 6) -> str:
+        """
+        Generate a random string starting with 'test' followed by random digits.
+        
+        Args:
+            max_digits (int): Maximum number of digits to append (default: 6)
+        
+        Returns:
+            str: Random string like 'test123456'
+        """
+        number = random.randint(0, 10**max_digits - 1)
+        return f"test{number}"
+
+
