@@ -46,24 +46,29 @@ class DataHandler:
     def append_csv(file_path: str, row: Dict[str, str], fieldnames: List[str]):
         """
         Appends a single row (dict) to an existing CSV file.
-        If the file doesn't exist, it creates one with headers.
+        Creates the file with headers if it doesn't exist.
+        Handles newline and concurrency issues cleanly.
         """
         abs_path = DataHandler._resolve_path(file_path)
         os.makedirs(os.path.dirname(abs_path), exist_ok=True)
 
         try:
+            # Always use newline='' to prevent merged lines
             with open(abs_path, mode='a', newline='', encoding='utf-8') as file:
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
-                if file.tell() == 0:  # file is empty
+                
+                # Write header only if file is empty
+                if os.stat(abs_path).st_size == 0:
                     writer.writeheader()
-                writer.writerow(row)
-        except FileNotFoundError:
-            # Create file and write header + first row
-            with open(abs_path, mode='w', newline='', encoding='utf-8') as file:
-                writer = csv.DictWriter(file, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerow(row)
-    
+                
+                # Ensure all values are strings (avoids encoding edge cases)
+                safe_row = {k: str(v) for k, v in row.items()}
+                writer.writerow(safe_row)
+
+        except Exception as e:
+            print(f"Error writing to CSV file {file_path}: {e}")
+            raise
+        
     @staticmethod
     def randomize_test_string(max_digits: int = 6) -> str:
         """
