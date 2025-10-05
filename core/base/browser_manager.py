@@ -11,7 +11,10 @@ class BrowserManager:
         try:
             self.playwright = sync_playwright().start()
             headless = Config.is_headless()
-            self.browser = self.playwright.chromium.launch(headless=headless)
+            self.browser = self.playwright.chromium.launch(
+            headless=headless,
+            args=["--start-maximized"]  # This launches the window maximized
+        )
         except PlaywrightError as e:
             self.stop_playwright()
             raise Exception(f"Failed with playwright error {e}")
@@ -21,7 +24,7 @@ class BrowserManager:
         """ Method to initialize a browser instance"""
         try:
             if not self.context and self.browser:
-                self.context = self.browser.new_context()
+                self.context = self.browser.new_context(viewport=None)
             if not self.page and self.context:
                 self.page = self.context.new_page()
             return self.page
