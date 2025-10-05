@@ -18,6 +18,9 @@ class SignupPage(UIBase):
     SUCCESSFUL_SIGNUP_TEXT = "h1"
 
     def create_account(self, user_data: dict):
+        """ Method used to enter the required data and create a new user account at Para bank 
+            Parameters: User data in dictionary format
+        """
         self.click(self.SIGNUP_BUTTON)
         self.type(self.FIRST_NAME, user_data["first"])
         self.type(self.LAST_NAME, user_data["last"])

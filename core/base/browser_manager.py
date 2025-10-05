@@ -13,10 +13,12 @@ class BrowserManager:
             headless = Config.is_headless()
             self.browser = self.playwright.chromium.launch(headless=headless)
         except PlaywrightError as e:
-            print(f"Failed to start browser: {e}")
             self.stop_playwright()
+            raise Exception(f"Failed with playwright error {e}")
+
 
     def new_page(self):
+        """ Method to initialize a browser instance"""
         try:
             if not self.context and self.browser:
                 self.context = self.browser.new_context()
@@ -24,10 +26,10 @@ class BrowserManager:
                 self.page = self.context.new_page()
             return self.page
         except PlaywrightError as e:
-            print(f"Failed to create new page: {e}")
             return None
 
     def close(self):
+        """ Method to close a browser instance"""
         try:
             if self.page:
                 self.page.close()
@@ -36,13 +38,15 @@ class BrowserManager:
             if self.browser:
                 self.browser.close()
         except PlaywrightError as e:
-            print(f"Error while closing browser: {e}")
+            raise Exception(f"Failed with playwright error {e}")
         finally:
             self.stop_playwright()
 
     def stop_playwright(self):
+        """ Method to stop playwright from running """
         if self.playwright:
             try:
                 self.playwright.stop()
             except Exception as e:
-                print(f"Error stopping Playwright: {e}")
+                raise Exception(f"Failed with playwright error {e}")
+

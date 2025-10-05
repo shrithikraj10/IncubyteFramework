@@ -28,7 +28,6 @@ IncubyteFramework.egg-info/
 venv/
 ENV/
 env/
-.env/
 
 # Pytest cache
 .pytest_cache/
@@ -60,5 +59,3 @@ coverage.xml
 *.cover
 .hypothesis/
 
-# Environment variables
-.env

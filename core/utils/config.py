@@ -34,6 +34,7 @@ class Config:
 
     @staticmethod
     def is_headless() -> bool:
+        """ Method to trigger headless mode"""
         try:
             headless_value = os.getenv("HEADLESS", "true").lower()
             return headless_value in ["true", "1", "yes"]
