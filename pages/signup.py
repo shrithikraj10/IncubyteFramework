@@ -14,8 +14,10 @@ class SignupPage(UIBase):
     PASSWORD = "#customer\\.password"
     REPEAT_PASSWORD = "#repeatedPassword"
     REGISTER_BUTTON = "input[value='Register']"
+    SIGNUP_BUTTON = "a[href*='register.htm']"
 
     def create_account(self, user_data: dict):
+        self.click(self.SIGNUP_BUTTON)
         self.type(self.FIRST_NAME, user_data["first"])
         self.type(self.LAST_NAME, user_data["last"])
         self.type(self.ADDRESS, user_data["address"])

@@ -4,6 +4,7 @@ from core.utils.config import Config
 from pages.signup import SignupPage
 from pages.login import LoginPage
 from pages.account import AccountPage
+from core.utils.data_handler import DataHandler
 
 # Link feature file
 scenarios("../features/test_signup.feature")
@@ -14,24 +15,14 @@ def navigate_to_registration():
     browser_manager = BrowserManager()
     page = browser_manager.new_page()
     page.goto(Config.get_base_url())
-    page.click("a[href*='register.htm']")
 
 @when("I create a new user account")
 def create_account():
     global signup_page
     signup_page = SignupPage(page)
-    user_data = {
-        "first": "John",
-        "last": "Doe",
-        "address": "123 Main St",
-        "city": "Goa",
-        "state": "GA",
-        "zip_code": "403001",
-        "phone": "9999999999",
-        "ssn": "123-45-6789",
-        "username": Config.get_username(),
-        "password": Config.get_password()
-    }
+    user_data = DataHandler.read_csv('../../test_data/test_signup.csv')[0]
+    user_data["username"] = Config.get_username
+    user_data["password"] = Config.get_password
     signup_page.create_account(user_data)
 
 @when("I log in with that account")
